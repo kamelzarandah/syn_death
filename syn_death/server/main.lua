@@ -18,7 +18,9 @@ AddEventHandler("syn_death:delete", function()
     if Config.removeweapons then 
         TriggerEvent("vorpCore:getUserWeapons", tonumber(_source), function(getUserWeapons)
            for k, v in pairs (getUserWeapons) do
-               VorpInv.subWeapon(_source, v.id)
+            local id = v.id
+            VorpInv.subWeapon(_source, v.id)
+            exports.ghmattimysql:execute("DELETE FROM loadout WHERE id=@id", { ['id'] = id})
            end
         end)
     end
